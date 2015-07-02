@@ -1,0 +1,49 @@
+<html>
+  <nav class="navbar navbar-masthead navbar-default" id="navbar">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="https://www.googledrive.com/host/0B-y5PxJT5zp1b0EwZHo0SkU0ZmM/NVCHS_Logo_Small.png">
+        </a>
+        <!-- <a class="navbar-brand" href="#">Brand</a> -->
+      </div>
+      
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse bs-example-masthead-collapse-1">
+
+        <div class="navbar-right">
+          <button type="button" class="btn btn-default navbar-btn" id="homeButton">Home</button>
+          <!-- <button type="button" class="btn btn-default navbar-btn" id="spiButton"
+          onclick="google.script.run.withSuccessHandler(loadSpi).getAllPurchaseItems()">Standard Purchase Items</button>
+          <!-- <button type="button" class="btn btn-default navbar-btn" id="reportButton">Reporting</button> -->
+          <!-- <button type="button" class="btn btn-default navbar-btn" id="adminButton">Admin</button> -->
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+</html>
+
+
+
+<script>
+$('#homeButton').click(loadHome);
+
+function loadSpi(resultHtml){
+  $('#home').addClass("hidden");
+  $('#spiButton').addClass("active");
+  $('#homeButton').removeClass("active");
+  var outputDiv = document.getElementById('itemResult');
+  outputDiv.innerHTML = resultHtml;
+}
+
+function loadHome(){
+  $('#spiPage').addClass("hidden");
+  $('#home').removeClass("hidden");
+  $('#spiButton').removeClass("active");
+  $('#homeButton').addClass("active");
+}
+
+</script>
