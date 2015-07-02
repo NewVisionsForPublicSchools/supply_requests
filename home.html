@@ -7,19 +7,25 @@
   <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
   
   <?!= include('style'); ?>
-  <?!= include('navbar'); ?>
+  
 </head>
 
 
 
 <body>
 
-  <div class="container-fluid" id="home">
+  <!-- navigation -->
+  <div><?!= include('navbar'); ?></div>
   
-      <div class="row vertical-center">
-        <button class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</button>
+  <div class="container-fluid">
+  
+      <div class="row vertical-center page" id="home">
+        <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
         <button class="btn btn-lg btn-primary" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
       </div>
+      
+      <!-- request_form page -->
+      <div class="page" id="reqForm" style="display:none"><?!= include('request_form'); ?></div>
       
   </div>
 
@@ -28,5 +34,18 @@
 
 
 <script>
+$('#subReqBtn').click(loadReqForm);
+$('#homeBtn').click(loadHome);
+
+function loadReqForm(resultHtml){
+  google.script.run.withSuccessHandler().getReqPage();
+  $('.page').hide();
+  $('#reqForm').show();
+}
+
+function loadHome(){
+  $('.page').hide();
+  $('#reqForm').show();
+}
 
 </script>

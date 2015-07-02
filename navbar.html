@@ -13,11 +13,7 @@
       <div class="collapse navbar-collapse bs-example-masthead-collapse-1">
 
         <div class="navbar-right">
-          <button type="button" class="btn btn-default navbar-btn" id="homeButton">Home</button>
-          <!-- <button type="button" class="btn btn-default navbar-btn" id="spiButton"
-          onclick="google.script.run.withSuccessHandler(loadSpi).getAllPurchaseItems()">Standard Purchase Items</button>
-          <!-- <button type="button" class="btn btn-default navbar-btn" id="reportButton">Reporting</button> -->
-          <!-- <button type="button" class="btn btn-default navbar-btn" id="adminButton">Admin</button> -->
+          <button type="button" class="btn btn-default navbar-btn" id="homeBtn">Home</button>
         </div>
       </div>
       <!-- /.navbar-collapse -->
@@ -29,7 +25,6 @@
 
 
 <script>
-$('#homeButton').click(loadHome);
 
 function loadSpi(resultHtml){
   $('#home').addClass("hidden");
@@ -37,13 +32,6 @@ function loadSpi(resultHtml){
   $('#homeButton').removeClass("active");
   var outputDiv = document.getElementById('itemResult');
   outputDiv.innerHTML = resultHtml;
-}
-
-function loadHome(){
-  $('#spiPage').addClass("hidden");
-  $('#home').removeClass("hidden");
-  $('#spiButton').removeClass("active");
-  $('#homeButton').addClass("active");
 }
 
 </script>
