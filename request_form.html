@@ -40,7 +40,10 @@
         <div class="col-md-3">
           <div class="input-group">
             <span class="input-group-addon">Priority</span>
-            <select class="form-control col-md-6" name="priority" id="priority" required="true" placeholder="Priority">
+            <select class="form-control col-md-6" name="priority" id="priority" required="true" placeholder="Priority"
+            data-toggle="popover" data-trigger="hover" data-placement="right" data-content="**High** -- instructional items needed for use 1-2 days from date of request;            
+            **Medium** -- instructional items needed for use 3-4 days from date of request;            
+            **Low** -- anything that is needed a week or so from the date of request.">
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -61,7 +64,6 @@
       </div> <!-- form-gorup -->
       
       <div class="pull-center">
-        <button class="btn btn-default" id="reqCanBtn">Cancel</button>
         <button class="btn btn-primary" id="reqSubBtn">Submit Request</button> 
       </div>
       
@@ -74,6 +76,7 @@
 <script>
 
   $('#reqSubBtn').click(submitRequest);
+  $('#priority').popover();
   
   function submitRequest(formObj){
     var formObj = {
