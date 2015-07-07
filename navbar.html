@@ -14,6 +14,7 @@
 
         <div class="navbar-right">
           <button type="button" class="btn btn-default navbar-btn" id="homeBtn">Home</button>
+          <button type="button" class="btn btn-default navbar-btn" id="reqBtn">Submit Request</button>
         </div>
       </div>
       <!-- /.navbar-collapse -->
@@ -25,13 +26,17 @@
 
 
 <script>
+$('#reqBtn').click(loadReqForm);
+$('#homeBtn').click(loadHome);
 
-function loadSpi(resultHtml){
-  $('#home').addClass("hidden");
-  $('#spiButton').addClass("active");
-  $('#homeButton').removeClass("active");
-  var outputDiv = document.getElementById('itemResult');
-  outputDiv.innerHTML = resultHtml;
+function loadReqForm(){
+  $('.page').hide();
+  $('#reqForm').show();
+}
+
+function loadHome(){
+  $('.page').hide();
+  $('#home').show();
 }
 
 </script>
