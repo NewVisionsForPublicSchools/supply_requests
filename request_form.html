@@ -77,7 +77,7 @@
 <script>
 
   $(function(){
-//    $('#reqSubBtn').click(submitRequest);
+  
     $('#supForm').submit(submitRequest);
     $('#priority').popover();
     
@@ -92,10 +92,10 @@
       
       google.script.run.withSuccessHandler().addRequest(formObj);
       
-      console.log("Hello World");
       $('.page').hide();
       $('#reqConfirm').show();
     }
+    
   });
 
 </script>
