@@ -1,7 +1,7 @@
 <div class="text-center">
-  <h1 class="text-primary">Supply Request Form<h1>
+  <h1 class="text-primary">Supply Request Form</h1>
   <div class="col-md-10 col-offset-1 text-center">
-    <form class="form-horizontal" method="get" id="reqForm">
+    <form class="form-horizontal" method="get" onsubmit="return false" id="supForm">
     
       <div class="form-group">
         <label class="control-label col-md-3" for="requestor"></label>
@@ -43,7 +43,7 @@
             <select class="form-control col-md-6" name="priority" id="priority" required="true" placeholder="Priority"
             data-toggle="popover" data-trigger="hover" data-placement="right" data-content="**High** -- instructional items needed for use 1-2 days from date of request;            
             **Medium** -- instructional items needed for use 3-4 days from date of request;            
-            **Low** -- anything that is needed a week or so from the date of request.">
+            **Low** -- anything that is needed a week or so from the date of request">
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -64,30 +64,37 @@
       </div> <!-- form-gorup -->
       
       <div class="pull-center">
+        <button class="btn btn-default" type="reset" id="resetReq">Reset</button>
         <button class="btn btn-primary" id="reqSubBtn">Submit Request</button> 
       </div>
       
     </form>
-  <div>
+  </div>
 </div> <!-- outer div -->
 
 
 
 <script>
 
-  $('#reqSubBtn').click(submitRequest);
-  $('#priority').popover();
-  
-  function submitRequest(formObj){
-    var formObj = {
-      fullName: $('#requestor').val().trim(),
-      item: $('#item').val().trim(),
-      qty: Number($('#qty').val()),
-      priority: $('#priority').val(),
-      description: $('#description').val().trim(),    
-    }
+  $(function(){
+    $('#reqSubBtn').click(submitRequest);
+    $('#priority').popover();
     
-    google.script.run.withSuccessHandler().addRequest(formObj);
-  }
+    function submitRequest(formObj){
+      var formObj = {
+        fullName: $('#requestor').val().trim(),
+        item: $('#item').val().trim(),
+        qty: Number($('#qty').val()),
+        priority: $('#priority').val(),
+        description: $('#description').val().trim(),    
+      }
+      
+      google.script.run.withSuccessHandler().addRequest(formObj);
+      
+      console.log("Hello World");
+      $('.page').hide();
+      $('#reqConfirm').show();
+    }
+  });
 
 </script>

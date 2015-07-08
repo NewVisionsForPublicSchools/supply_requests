@@ -19,6 +19,7 @@
   
   <div class="container-fluid">
   
+      <!-- Home page -->
       <div class="row vertical-center page" id="home">
         <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
         <button class="btn btn-lg btn-primary" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
@@ -27,6 +28,9 @@
       <!-- request_form page -->
       <div class="page" id="reqForm" style="display:none"><?!= include('request_form'); ?></div>
       
+      <!-- request confirmation page -->
+      <div class="page" id="reqConfirm" style="display:none"><?!= include('request_confirmation'); ?></div>
+      
   </div>
 
 </body>
@@ -34,11 +38,15 @@
 
 
 <script>
+$(function(){
 $('#subReqBtn').click(loadReqForm);
 
 function loadReqForm(resultHtml){
   $('.page').hide();
   $('#reqForm').show();
+  $('#resetReq').click();
 }
+
+});
 
 </script>

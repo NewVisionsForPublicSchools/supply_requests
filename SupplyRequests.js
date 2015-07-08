@@ -8,7 +8,7 @@ function addRequest(formObj){
   var request = formObj;
   request.date = new Date();
   request.username = Session.getActiveUser().getEmail();
-  request.id = "AMS4_" + nextId.toString();
+  request.id = "AMS4SR" + nextId.toString();
   request.status = "New";
   
   var query = 'INSERT INTO Requests(' + requestColumns + ') values("' 
@@ -24,5 +24,6 @@ function addRequest(formObj){
   
   NVGAS.insertSqlRecord(dbString, [query]);
   PropertiesService.getScriptProperties().setProperty('nextReqId', (Number(nextId) + 1).toString())
-  Logger.log(request);
+  return HtmlService.createTemplateFromFile('request_confirmation').evaluate()
+  .setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }

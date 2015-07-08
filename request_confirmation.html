@@ -1,0 +1,32 @@
+<div class="text-center">
+
+  <h1 class="text-danger">Request Submitted</h1>
+  <p>Your supply request has been successfully submitted! You should recieve an email confirmation shortly.</p>
+  
+  <div class="pull-center row">
+    <button class="btn btn-default" type="button" id="homeBtn">Home</button>
+    <button class="btn btn-primary" id="reqBtn">Submit Another Request</button> 
+  </div>
+  
+</div>
+
+
+
+<script>
+
+  $('#reqBtn').click(loadReqForm);
+  $('#homeBtn').click(loadHome);
+  
+  function loadReqForm(){
+    $('.page').hide();
+    $('#reqForm').show();
+    $('#resetReq').click();
+  }
+  
+  function loadHome(){
+    $('.page').hide();
+    $('#home').show();
+  }
+
+
+</script>
