@@ -65,7 +65,7 @@
       
       <div class="pull-center">
         <button class="btn btn-default" type="reset" id="resetReq">Reset</button>
-        <button class="btn btn-primary" id="reqSubBtn">Submit Request</button> 
+        <button class="btn btn-primary" type="submit" id="reqSubBtn">Submit Request</button> 
       </div>
       
     </form>
@@ -77,7 +77,8 @@
 <script>
 
   $(function(){
-    $('#reqSubBtn').click(submitRequest);
+//    $('#reqSubBtn').click(submitRequest);
+    $('#supForm').submit(submitRequest);
     $('#priority').popover();
     
     function submitRequest(formObj){
