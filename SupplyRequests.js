@@ -23,7 +23,22 @@ function addRequest(formObj){
             + request.username + '")';
   
   NVGAS.insertSqlRecord(dbString, [query]);
-  PropertiesService.getScriptProperties().setProperty('nextReqId', (Number(nextId) + 1).toString())
-  return HtmlService.createTemplateFromFile('request_confirmation').evaluate()
-  .setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+  PropertiesService.getScriptProperties().setProperty('nextReqId', (Number(nextId) + 1).toString());
+//  sendConfirmation(request);
+}
+
+
+
+function sendConfirmation(request){
+  var test, recipient, subject, html, template;
+  
+  recipient = request.username;
+  subject = "DO NOT REPLY: Supply Request Confirmation | " + request.id;
+  html = HtmlService.createTemplateFromFile('confirmation_email');
+  html.data = request;
+  template = html.evaluate().getContent();
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
+  
+  debugger;
 }
