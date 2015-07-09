@@ -24,7 +24,8 @@ function addRequest(formObj){
   
   NVGAS.insertSqlRecord(dbString, [query]);
   PropertiesService.getScriptProperties().setProperty('nextReqId', (Number(nextId) + 1).toString());
-//  sendConfirmation(request);
+  sendConfirmation(request);
+  sendBusMgrAlert(request);
 }
 
 
@@ -35,10 +36,25 @@ function sendConfirmation(request){
   recipient = request.username;
   subject = "DO NOT REPLY: Supply Request Confirmation | " + request.id;
   html = HtmlService.createTemplateFromFile('confirmation_email');
-  html.data = request;
+  html.request = request;
   template = html.evaluate().getContent();
   
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
   
   debugger;
+}
+
+
+
+function sendBusMgrAlert(request){
+  var test, recipient, subject, html, template;
+  
+  recipient = PropertiesService.getScriptProperties().getProperty('busMgr');
+  subject = request.qty + " " + request.item + " | Request Submitted | " + request.id
+  html = HtmlService.createTemplateFromFile('busMgr_alert_email');
+  html.request = request;
+  html.url = PropertiesService.getScriptProperties().getProperty('scriptUrl');
+  template = html.evaluate().getContent();
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
 }

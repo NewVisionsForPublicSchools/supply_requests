@@ -20,9 +20,11 @@
   <div class="container-fluid">
   
       <!-- Home page -->
-      <div class="row vertical-center page" id="home">
-        <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
-        <button class="btn btn-lg btn-primary" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
+      <div class="page" id="home">
+        <div class="row vertical-center">
+          <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
+          <button class="btn btn-lg btn-primary" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
+        </div>
       </div>
       
       <!-- request_form page -->
@@ -39,13 +41,14 @@
 
 <script>
 $(function(){
-$('#subReqBtn').click(loadReqForm);
 
-function loadReqForm(resultHtml){
-  $('.page').hide();
-  $('#reqForm').show();
-  $('#resetReq').click();
-}
+  $('#subReqBtn').click(loadReqForm);
+  
+  function loadReqForm(resultHtml){
+    $('.page').hide();
+    $('#reqForm').show();
+    $('#resetReq').click();
+  }
 
 });
 
