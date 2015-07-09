@@ -1,5 +1,6 @@
 var dbString = '//ga-sql-bootcamp:demodb0615/Supply_Requests';
-var requestColumns = 'request_id,full_name,item,qty,priority,description,date,status,username';
+var requestColumns = 'request_id,full_name,item,qty,priority,description,date,username';
+var trackingColumns = 'request_id,status,confirmation,bus_mgr_alert,dso_alert,principal_alert,cmo_alert,approval,denial';
 
 
 
@@ -11,7 +12,7 @@ function addRequest(formObj){
   request.id = "AMS4SR" + nextId.toString();
   request.status = "New";
   
-  var query = 'INSERT INTO Requests(' + requestColumns + ') values("' 
+  var reqQuery = 'INSERT INTO Requests(' + requestColumns + ') values("' 
             + request.id + '", "'
             + request.fullName + '","'
             + request.item + '", "'
@@ -19,10 +20,13 @@ function addRequest(formObj){
             + request.priority + '", "'
             + request.description + '", "'
             + request.date + '", "'
-            + request.status + '", "'
             + request.username + '")';
   
-  NVGAS.insertSqlRecord(dbString, [query]);
+  var trackQuery = 'INSERT INTO Tracking(request_id,status) values("' 
+            + request.id + '", "'
+            + request.status + '")';
+  
+  NVGAS.insertSqlRecord(dbString, [reqQuery, trackQuery]);
   PropertiesService.getScriptProperties().setProperty('nextReqId', (Number(nextId) + 1).toString());
   sendConfirmation(request);
   sendBusMgrAlert(request);
