@@ -83,28 +83,19 @@ function sendBusMgrAlert(request){
 function getRequestsByRole(){
   var test, user, userQuery, roles, keys, requests;
   
+//  user = 'approver1@newvisions.org';
   user = Session.getActiveUser().getEmail();
   userQuery = 'SELECT * FROM users WHERE username = "' + user + '"'; 
   roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
     return e.roles;
   });
   
-  keys = roles.map(function(e){
-    var query = 'SELECT * FROM Tracking WHERE queue = "' + e + '"';
+  requests = roles.map(function(e){
+    var query = 'SELECT * FROM Requests r INNER JOIN Tracking t on r.request_id = t.request_id WHERE t.queue = "'
+      + e + '"';
     return NVGAS.getSqlRecords(dbString, query);
   }).reduce(function(e){
     return e;
-  }).map(function(e){
-    return e.request_id;
-  });
-  
-  requests = keys.map(function(e){
-    var query = 'SELECT * FROM Requests WHERE request_id = "' + e + '"';
-    return NVGAS.getSqlRecords(dbString, query);
-  }).map(function(e){
-    return e.reduce(function(el){
-      return el;
-    });
   });
   
   debugger;
