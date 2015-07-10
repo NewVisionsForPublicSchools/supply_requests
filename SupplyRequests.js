@@ -74,8 +74,7 @@ function sendBusMgrAlert(request){
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
   
   alertQuery = 'UPDATE Tracking SET bus_mgr_alert = "' + new Date() + '" WHERE request_id = "' + request.id + '"';
-  statusQuery = 'UPDATE Tracking SET status = "Processing" WHERE request_id = "' + request.id + '"';
-  NVGAS.updateSqlRecord(dbString, [alertQuery, statusQuery]);
+  NVGAS.updateSqlRecord(dbString, [alertQuery]);
 }
 
 
