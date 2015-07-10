@@ -5,9 +5,8 @@ var userColumns = 'username,roles';
 
 function validateUser(){
   var test, currentUser, query, validUser, result;
-  
-  currentUser = 'approver1@newvisions.org'
-//  currentUser = Session.getActiveUser().getEmail();
+  Logger.log("Hellow World");
+  currentUser = Session.getActiveUser().getEmail();
   query = 'SELECT * FROM users';
   
   validUser = NVGAS.getSqlRecords(dbString, query).map(function(e){
@@ -16,5 +15,5 @@ function validateUser(){
     return e == currentUser;
   })[0];
  
-  return validUser ? 1 : 0;
+  return validUser ? true : false;
 }

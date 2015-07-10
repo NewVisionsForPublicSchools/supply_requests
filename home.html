@@ -23,7 +23,7 @@
       <div class="page" id="home">
         <div class="row vertical-center">
           <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
-          <button class="btn btn-lg btn-primary" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
+          <button class="btn btn-lg btn-primary btn-validated" type="button" id="procReqBtn" disabled="disabled">Process Supply Request</button>
         </div>
       </div>
       
@@ -32,6 +32,9 @@
       
       <!-- request confirmation page -->
       <div class="page" id="reqConfirm" style="display:none"><?!= include('request_confirmation'); ?></div>
+      
+      <!-- process requests page -->
+      <div class="page" id="procPage" style="display:none"><?!= include('process_requests'); ?></div>
       
   </div>
 
@@ -42,12 +45,25 @@
 <script>
 $(function(){
 
+  $(document).ready(google.script.run.withSuccessHandler(verifyUser).validateUser());
   $('#subReqBtn').click(loadReqForm);
+  $('#procReqBtn').click(loadProcPage);
   
   function loadReqForm(resultHtml){
     $('.page').hide();
     $('#reqForm').show();
     $('#resetReq').click();
+  }
+  
+  function loadProcPage(){
+    $('.page').hide();
+    $('#procPage').show();
+  }
+  
+  function verifyUser(answer){
+    if(answer == true){
+      $('.btn-validated').prop('disabled', false);
+    }
   }
 
 });
