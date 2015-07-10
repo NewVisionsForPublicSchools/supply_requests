@@ -1,6 +1,7 @@
 var dbString = '//ga-sql-bootcamp:demodb0615/Supply_Requests';
 var requestColumns = 'request_id,full_name,item,qty,priority,description,date,username';
-var trackingColumns = 'request_id,status,confirmation,bus_mgr_alert,dso_alert,principal_alert,cmo_alert,approval,denial';
+var trackingColumns = 'request_id,status,confirmation,bus_mgr_alert,dso_alert,principal_alert,cmo_alert,approval,denial,'
+                      + 'queue';
 
 
 
@@ -23,9 +24,10 @@ function addRequest(formObj){
             + request.date + '", "'
             + request.username + '")';
   
-  var trackQuery = 'INSERT INTO Tracking(request_id, status) values("' 
+  var trackQuery = 'INSERT INTO Tracking(request_id, status, queue) values("' 
             + request.id + '", "'
-            + request.status + '")';
+            + request.status + '", "'
+            + "BM" + '")';
 
   queryArray.push(reqQuery);
   queryArray.push(trackQuery);
@@ -72,6 +74,38 @@ function sendBusMgrAlert(request){
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
   
   alertQuery = 'UPDATE Tracking SET bus_mgr_alert = "' + new Date() + '" WHERE request_id = "' + request.id + '"';
-  statusQuery = 'UPDATE Tracking SET status = "With Bus Mgr - Processing" WHERE request_id = "' + request.id + '"';
+  statusQuery = 'UPDATE Tracking SET status = "Processing" WHERE request_id = "' + request.id + '"';
   NVGAS.updateSqlRecord(dbString, [alertQuery, statusQuery]);
+}
+
+
+
+function getRequestsByRole(){
+  var test, user, userQuery, roles, keys, requests;
+  
+  user = Session.getActiveUser().getEmail();
+  userQuery = 'SELECT * FROM users WHERE username = "' + user + '"'; 
+  roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
+    return e.roles;
+  });
+  
+  keys = roles.map(function(e){
+    var query = 'SELECT * FROM Tracking WHERE queue = "' + e + '"';
+    return NVGAS.getSqlRecords(dbString, query);
+  }).reduce(function(e){
+    return e;
+  }).map(function(e){
+    return e.request_id;
+  });
+  
+  requests = keys.map(function(e){
+    var query = 'SELECT * FROM Requests WHERE request_id = "' + e + '"';
+    return NVGAS.getSqlRecords(dbString, query);
+  }).map(function(e){
+    return e.reduce(function(el){
+      return el;
+    });
+  });
+  
+  debugger;
 }
