@@ -15,6 +15,8 @@
         <div class="navbar-right">
           <button type="button" class="btn btn-default navbar-btn" id="homeBtn">Home</button>
           <button type="button" class="btn btn-default navbar-btn" id="reqBtn">Submit Request</button>
+          <button type="button" class="btn btn-default navbar-btn btn-validated" id="procBtn" disabled="disabled">
+          Process Requests</button>
         </div>
       </div>
       <!-- /.navbar-collapse -->
@@ -26,18 +28,27 @@
 
 
 <script>
-$('#reqBtn').click(loadReqForm);
-$('#homeBtn').click(loadHome);
+$(function(){
 
-function loadReqForm(){
-  $('.page').hide();
-  $('#reqForm').show();
-  $('#resetReq').click();
-}
-
-function loadHome(){
-  $('.page').hide();
-  $('#home').show();
-}
+  $('#reqBtn').click(loadReqForm);
+  $('#homeBtn').click(loadHome);
+  $('#procBtn').click(loadProc);
+  
+  function loadReqForm(){
+    $('.page').hide();
+    $('#reqForm').show();
+    $('#resetReq').click();
+  }
+  
+  function loadHome(){
+    $('.page').hide();
+    $('#home').show();
+  }
+  
+  function loadProc(){
+    $('#procReqBtn').click();
+  }
+  
+});
 
 </script>
