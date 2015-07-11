@@ -69,9 +69,10 @@ $(function(){
   
   function updateActionItems(resultHtml){
     console.log("Hello Action Items");
-    $('#newAction').html(resultHtml[0]);
-    $('#fulfillAction').html(resultHtml[1]);
-    $('#actionItems').show();
+    var $output = $('#actionItems');
+    $output.html(resultHtml);
+    console.log($output);
+    $output.show();
   }
 
 });

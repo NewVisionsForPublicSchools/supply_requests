@@ -23,7 +23,7 @@ function getRequestsByRole(){
 
 
 function getRequestActionItems(){
-  var test, queue, nr, tbf, newRequest, toBeFulfilled, results;
+  var test, queue, nr, tbf, html;
   
   queue = getRequestsByRole();
   nr = queue.filter(function(e){
@@ -32,12 +32,11 @@ function getRequestActionItems(){
   tbf = queue.filter(function(e){
     return e.status == "Approved";
   });
-  results = [];
   
-  newRequest = HtmlService.createHtmlOutput('<h1>' + nr.length + '</h1>');
-  toBeFulfilled = HtmlService.createHtmlOutput('<h1>' + tbf.length + '</h1>');
-
-  results.push(newRequest.setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent());
-  results.push(toBeFulfilled.setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent());
-  return results;
+  html = HtmlService.createTemplateFromFile('action_items');
+  html.newClass = nr.length > 0 ? 'nvRed' : 'nvGreen';
+  html.fulfillClass = tbf.length > 0 ? 'nvRed' : 'nvGreen';
+  html.nr = nr.length;
+  html.tbf = tbf.length;
+  return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
