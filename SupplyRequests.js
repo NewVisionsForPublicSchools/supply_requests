@@ -76,26 +76,3 @@ function sendBusMgrAlert(request){
   alertQuery = 'UPDATE Tracking SET bus_mgr_alert = "' + new Date() + '" WHERE request_id = "' + request.id + '"';
   NVGAS.updateSqlRecord(dbString, [alertQuery]);
 }
-
-
-
-function getRequestsByRole(){
-  var test, user, userQuery, roles, keys, requests;
-  
-//  user = 'approver1@newvisions.org';
-  user = Session.getActiveUser().getEmail();
-  userQuery = 'SELECT * FROM users WHERE username = "' + user + '"'; 
-  roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
-    return e.roles;
-  });
-  
-  requests = roles.map(function(e){
-    var query = 'SELECT * FROM Requests r INNER JOIN Tracking t on r.request_id = t.request_id WHERE t.queue = "'
-      + e + '"';
-    return NVGAS.getSqlRecords(dbString, query);
-  }).reduce(function(e){
-    return e;
-  });
-  
-  debugger;
-}

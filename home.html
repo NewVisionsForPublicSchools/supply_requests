@@ -27,7 +27,7 @@
         </div>
       </div>
       
-      <!-- request_form page -->
+      <!-- request form page -->
       <div class="page" id="reqForm" style="display:none"><?!= include('request_form'); ?></div>
       
       <!-- request confirmation page -->
@@ -58,12 +58,20 @@ $(function(){
   function loadProcPage(){
     $('.page').hide();
     $('#procPage').show();
+    google.script.run.withSuccessHandler(updateActionItems).getRequestActionItems();
   }
   
   function verifyUser(answer){
     if(answer == true){
       $('.btn-validated').prop('disabled', false);
     }
+  }
+  
+  function updateActionItems(resultHtml){
+    console.log("Hello Action Items");
+    $('#newAction').html(resultHtml[0]);
+    $('#fulfillAction').html(resultHtml[1]);
+    $('#actionItems').show();
   }
 
 });
