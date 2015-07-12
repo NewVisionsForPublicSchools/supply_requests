@@ -1,0 +1,28 @@
+<div>
+  <h3 class="pull-left text-primary">New Requests</h3>
+  <table class="table table-striped">
+    <tr>
+      <th class="bg-primary">Id</th>      
+      <th class="bg-primary">Full Name</th>
+      <th class="bg-primary">Item</th>
+      <th class="bg-primary">Description</th>
+      <th class="bg-primary">Qty</th>
+      <th class="bg-primary">Priority</th>
+      <th class="bg-primary">Date Submitted</th>
+      <th class="bg-primary">Status</th>
+    </tr> <!-- close header row -->
+    
+    <? for(var i=0;i<data.length;i++){ ?>
+      <tr>
+        <td><b><?= data[i].request_id ?></b></td>
+        <td><?= data[i].full_name ?></td>
+        <td><?= data[i].item ?></td>
+        <td><?= data[i].description ?></td>
+        <td><?= data[i].qty ?></td>
+        <td><?= data[i].priority ?></td>
+        <td><?= data[i].date ?></td>
+        <td><?= data[i].status ?></td>
+      </tr>
+    <? } ?>
+  </table>
+</div>
