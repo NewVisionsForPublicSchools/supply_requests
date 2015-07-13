@@ -1,8 +1,8 @@
 function getRequestsByRole(){
   var test, user, userQuery, roles, keys, requests;
   
-  user = 'approver1@newvisions.org';
-//  user = Session.getActiveUser().getEmail();
+//  user = 'approver1@newvisions.org';
+  user = Session.getActiveUser().getEmail();
   userQuery = 'SELECT * FROM users WHERE username = "' + user + '"'; 
   roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
     return e.roles;
@@ -47,7 +47,7 @@ function getRequestActionItems(){
 function loadNewRequests(){
   var test, queue, data, html;
   
-  queue = JSON.parse(CacheService.getUserCache().get('roleRequests'))
+  queue = JSON.parse(CacheService.getUserCache().get('roleRequests')) || getRequestsByRole();
   data = queue.filter(function(e){
     return e.status == 'New';
   });
