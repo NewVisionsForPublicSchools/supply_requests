@@ -1,20 +1,22 @@
 <div>
   <h3 class="pull-left text-primary">New Requests</h3>
-  <table class="table table-striped">
+  <table id="newReqTbl" class="table table-striped">
     <tr>
-      <th class="bg-primary">Id</th>      
-      <th class="bg-primary">Full Name</th>
-      <th class="bg-primary">Item</th>
-      <th class="bg-primary">Description</th>
-      <th class="bg-primary">Qty</th>
-      <th class="bg-primary">Priority</th>
-      <th class="bg-primary">Date Submitted</th>
-      <th class="bg-primary">Status</th>
+      <th class="bg-primary text-center">Id</th>      
+      <th class="bg-primary text-center">Full Name</th>
+      <th class="bg-primary text-center">Item</th>
+      <th class="bg-primary text-center">Description</th>
+      <th class="bg-primary text-center">Qty</th>
+      <th class="bg-primary text-center">Priority</th>
+      <th class="bg-primary text-center">Date Submitted</th>
+      <th class="bg-primary text-center">Status</th>
     </tr> <!-- close header row -->
     
     <? for(var i=0;i<data.length;i++){ ?>
       <tr>
-        <td><b><?= data[i].request_id ?></b></td>
+        <td><button class="btn btn-xs btn-primary newReqLink" value=<?= data[i].request_id ?>>
+          <?= data[i].request_id ?>
+        </button></td>
         <td><?= data[i].full_name ?></td>
         <td><?= data[i].item ?></td>
         <td><?= data[i].description ?></td>
@@ -26,3 +28,18 @@
     <? } ?>
   </table>
 </div>
+
+
+
+<script>
+  $(function(){
+    
+    $('.newReqLink').click(goToLink);
+    
+    function goToLink(){
+      var $request = $(this).attr("value");
+      
+    }
+   
+  });
+</script>

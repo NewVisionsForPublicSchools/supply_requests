@@ -3,15 +3,15 @@
     <div class=<?= 'tile-item item bg-' + newClass ?>>
       <br>
         <div id="nrBtn" type="button" class="tile well btn btn-default text-center">
-          <h1 class=<?= 'text-' + newClass ?>><?= nr ?></h1>
-          <h5 class="text-primary"><u>New Requests</u></h5>
+          <h1 id="newReqNum" value=<?= nr ?> class=<?= 'text-' + newClass ?>><?= nr ?></h1>
+          <h5 class="text-primary"><b><u>New Requests</u></b></h5>
         </div>
     </div>
     <div class=<?= 'tile-item item bg-' + fulfillClass ?>>
       <br>
       <div id="tbfBtn" type="button" class="tile well btn btn-default text-center">
         <h1 class=<?= 'text-' + fulfillClass ?>><?= tbf ?></h1>
-        <h5 class="text-primary"><u>To Be Fulfilled</u></h5>
+        <h5 class="text-primary"><b><u>To Be Fulfilled</u></b></h5>
       </div>
     </div>
   </div>
