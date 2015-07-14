@@ -1,3 +1,108 @@
-<div>
-  Hello New Request Form
+<div class="text-center">
+  <h2 class="text-nvGray">New Request Processing</h2>
+  <br/>
+  <div class=""> 
+    <form class="form-horizontal" method="get" onsubmit="return false" id="procNewReqForm">
+      
+      <div class="row well col-md-4 col-md-offset-4">
+        <h4 class=""><b>Request: </b><?= request.request_id ?></h4>
+        <h4 class=""><b>Requester: </b><?= request.full_name ?></h4>
+        <h4 class=""><b>Item: </b><?= request.item ?></h4>
+        <h4 class=""><b>Qty: </b><?= request.qty ?></h4>
+      </div>
+      <br/>
+      
+      <div class="col-md-10 col-md-offset-1">
+      <div class="form-group">
+        <label class="control-label col-md-3" for="newReqCost"></label>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">Cost</span>
+            <input type="number" min="0" class="form-control col-md-3" name="newReqCost" id="newReqCost"
+                   required="true" step=".01" pattern="[0-9]+([\.|,][0-9]+)?" placeholder="0.00">
+          </div> <!-- input-group -->
+        </div>
+      </div> <!-- form-gorup -->
+      
+      <div class="form-group">
+        <label class="control-label col-md-3" for="newReqStatus"></label>
+        <div class="col-md-3">
+          <div class="input-group">
+            <span class="input-group-addon">Status</span>
+            <select class="form-control col-md-6" name="newReqStatus" id="newReqStatus" required="true" placeholder="Status">
+              <option>New</option>
+              <option>Under Review</option>
+              <option>Approved</option>
+              <option>Denied</option>
+            </select>
+          </div> <!-- input-group -->
+        </div>
+      </div> <!-- form-gorup -->
+      
+      <div class="form-group" id="newReqResGrp" style="display:none">
+        <label class="control-label col-md-3" for="newReqRes"></label>
+        <div class="col-md-8">
+          <div class="input-group">
+            <span class="input-group-addon">Resolution</span>
+            <textarea class="form-control col-md-8" rows="4" name="newReqRes" id="newReqRes" placeholder="Resolution">
+            </textarea>
+          </div> <!-- input-group -->
+        </div>
+      </div> <!-- form-gorup -->
+      
+      <div class="form-group">
+        <label class="control-label col-md-3" for="requestId"></label>
+        <input type="text" class="form-control col-md-6" name="requestId" id="requestId" style="display:none"
+               value=<?= request.request_id ?>>
+      </div>
+      
+      <div class="form-group">
+        <label class="control-label col-md-3" for="newReqApprover"></label>
+        <input type="text" class="form-control col-md-6" name="newReqApprover" id="newReqApprover" style="display:none"
+               value=<?= approver ?>>
+      </div>
+      
+      <div class="pull-center">
+        <button class="btn btn-default" id="newReqCancelBtn">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="newReqSubBtn">Submit</button> 
+      </div>
+      </div> <!-- div -->
+      
+    </form>
+  </div>
 </div>
+
+
+
+<script>
+  $(function(){
+
+    $('#newReqStatus').on("change", displayResolution);
+    $('#newReqCancelBtn').click(cancelProcNewReq);
+    
+    function cancelProcNewReq(){
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $('#actionItems').show();
+      $('#newReqForm').hide();
+      $('#nrBtn').click();
+    }
+    
+    function displayResolution(){
+      console.log("Displaying Resolution");
+      var $status = $('#newReqStatus').val();
+      if($status == 'Denied'){
+        $('#newReqRes').prop("required", true);
+        $('#newReqRes').attr("required", "true");
+        $('#newReqResGrp').show();
+//        console.log($('#newReqResGrp').html());
+      }
+      else{
+        $('#newReqRes').prop("required", false);
+        $('#newReqResGrp').hide();
+//        console.log($('#newReqResGrp').html());
+      }
+    }
+
+  });
+</script>

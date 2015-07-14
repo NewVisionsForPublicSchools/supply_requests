@@ -79,5 +79,6 @@ function loadNewReqForm(request_id){
   Logger.log(request_id)
   html = HtmlService.createTemplateFromFile('new_request_form');
   html.request = getRequest(request_id);
+  html.approver = Session.getActiveUser().getEmail();
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
