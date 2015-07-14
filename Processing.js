@@ -71,3 +71,13 @@ function loadToBeFulfilled(){
   html.data = data;
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();  
 }
+
+
+
+function loadNewReqForm(request_id){
+  var test, html;
+  Logger.log(request_id)
+  html = HtmlService.createTemplateFromFile('new_request_form');
+  html.request = getRequest(request_id);
+  return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}

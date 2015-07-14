@@ -76,3 +76,15 @@ function sendBusMgrAlert(request){
   alertQuery = 'UPDATE Tracking SET bus_mgr_alert = "' + new Date() + '" WHERE request_id = "' + request.id + '"';
   NVGAS.updateSqlRecord(dbString, [alertQuery]);
 }
+
+
+
+function getRequest(request_id){
+  var test, query, request;
+  
+  query = 'SELECT * FROM Requests r INNER JOIN Tracking t ON r.request_id = t.request_id WHERE r.request_id = "'
+          + request_id + '"';
+  request = NVGAS.getSqlRecords(dbString, query)[0];
+  
+  return request;
+}

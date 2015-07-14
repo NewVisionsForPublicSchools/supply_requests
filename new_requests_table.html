@@ -38,7 +38,18 @@
     
     function goToLink(){
       var $request = $(this).attr("value");
-      
+      google.script.run.withSuccessHandler(displayNewReqForm).loadNewReqForm($request);
+    }
+    
+    function displayNewReqForm(resultHtml){
+      console.log("Displaying TBF");
+      console.log(resultHtml);
+      var $output = $('#newReqForm');
+      $output.html(resultHtml);
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $('#actionItems').hide();
+      $('#newReqForm').show();
     }
    
   });
