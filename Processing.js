@@ -98,9 +98,17 @@ function processNewRequest(formObj){
            + '" WHERE r.request_id = "' + formObj.request_id + '" AND t.request_id = r.request_id';
   queryArray.push(rQuery);
   
-  if(formObj.status == 'Approved'){
-  aQuery = 'UPDATE Tracking SET approval = "' + new Date() + '" WHERE request_id = "' + formObj.request_id + '"';
-  queryArray.push(aQuery);
+  switch(formObj.status){
+    case 'Approved':
+      aQuery = 'UPDATE Tracking SET approval = "' + new Date() + '" WHERE request_id = "' + formObj.request_id + '"';
+      queryArray.push(aQuery);
+      break;
+    case 'Denied':
+      aQuery = 'UPDATE Tracking SET denial = "' + new Date() + '", queue = "" WHERE request_id = "' + formObj.request_id + '"';
+      queryArray.push(aQuery);
+      break;
+    default:
+      break;
   }
   
   NVGAS.insertSqlRecord(dbString, queryArray);
@@ -154,5 +162,17 @@ function sendApprovalEmail(request_id){
 
 
 function sendDenialEmail(request_id){
+  var test, request, recipient, subject, html, template, copyList;
   
+  request = getRequest(request_id);
+  recipient = request.username;
+  subject = "DO NOT REPLY: Supply Request Denied | " + request.request_id;
+  html = HtmlService.createTemplateFromFile('denial_email');
+  html.request = request;
+  template = html.evaluate().getContent();
+  copyList = PropertiesService.getScriptProperties().getProperty('busMgr') + ","
+             + PropertiesService.getScriptProperties().getProperty('dso');
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
+                                            cc: copyList});
 }
