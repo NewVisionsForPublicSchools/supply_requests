@@ -90,7 +90,7 @@ function loadNewReqForm(request_id){
 
 
 function processNewRequest(formObj){
-  var test, queryArray, rQuery, aQuery, html;
+  var test, queryArray, rQuery, aQuery, html, approverAlert, newQueue;
   
   queryArray = [];
   rQuery = 'UPDATE Requests r, Tracking t SET r.cost = "' + formObj.cost + '", t.status = "' + formObj.status
@@ -103,14 +103,24 @@ function processNewRequest(formObj){
       aQuery = 'UPDATE Tracking SET approval = "' + new Date() + '" WHERE request_id = "' + formObj.request_id + '"';
       queryArray.push(aQuery);
       break;
+      
     case 'Denied':
       aQuery = 'UPDATE Tracking SET denial = "' + new Date() + '", queue = "" WHERE request_id = "' + formObj.request_id + '"';
       queryArray.push(aQuery);
       break;
+      
+    case 'Under Review':
+      approverAlert = (formObj.cost >= 1000) && (formObj.cost < 10000) ? "dso_alert" : (formObj.cost >= 10000) ? "principal_alert" : "bus_mgr_alert";
+      newQueue = (formObj.cost >= 1000) && (formObj.cost < 10000) ? "DSO" : (formObj.cost >= 10000) ? "P" : "BM";
+      aQuery = 'UPDATE Tracking SET ' + approverAlert + ' = "' + new Date() + '", queue = "' + newQueue
+               + '" WHERE request_id = "' + formObj.request_id + '"';
+      queryArray.push(aQuery);
+      break;
+      
     default:
       break;
   }
-  
+ 
   NVGAS.insertSqlRecord(dbString, queryArray);
   checkApprovalStatus(formObj);
   
@@ -134,6 +144,10 @@ function checkApprovalStatus(approvalObj){
       
     case 'Denied':
       sendDenialEmail(request);
+      break;
+      
+    case 'Under Review':
+      sendProcessNotificationEmail(request);
       break;
       
     default:
@@ -174,5 +188,29 @@ function sendDenialEmail(request_id){
              + PropertiesService.getScriptProperties().getProperty('dso');
   
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
+                                            cc: copyList});
+}
+
+
+
+function sendProcessNotificationEmail(request_id){
+  var test, request, recipientQuery, recipients, subject, html, template, ccQuery, copyList;
+  
+  request = getRequest(request_id);
+  recipientQuery = 'SELECT username FROM users WHERE roles LIKE "%' + request.queue + '%"';
+  recipients = NVGAS.getSqlRecords(dbString, recipientQuery).map(function(e){
+    return e.username;
+  }).join();
+  subject = "DO NOT REPLY: Supply Request Approval Needed | " + request.request_id;
+  html = HtmlService.createTemplateFromFile('needs_approval_email');
+  html.request = request;
+  html.url = PropertiesService.getScriptProperties().getProperty('scriptUrl');
+  template = html.evaluate().getContent();
+  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
+    return e.username;
+  }).join();
+  
+  GmailApp.sendEmail(recipients, subject,"",{htmlBody: template,
                                             cc: copyList});
 }
