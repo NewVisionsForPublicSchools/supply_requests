@@ -1,0 +1,34 @@
+<div>
+  <h2 class="nvGray">Supply Request Processed Confirmation</h2>
+  <h4>Your submisson for processing <b><?= request ?></b> has been successful.</h4>
+  
+  <div class="pull-center row">
+    <button class="btn btn-danger" type="button" id="homeBtn3">Home</button>
+    <button class="btn btn-primary" id="procReqBtn2">Process Another Request</button> 
+  </div>
+</div>
+
+
+
+<script>
+  $(function(){
+
+    $('#homeBtn3').click(function(){
+      $('#homeBtn').trigger("click");
+    });
+    
+    $('#procReqBtn2').click(function(){
+      google.script.run.withSuccessHandler(updateActionItems).getRequestActionItems();
+      $('#procReqBtn').trigger("click");
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $('#actionItems').show();
+    });
+    
+   function updateActionItems(resultHtml){
+      var $output = $('#actionItems');
+      $output.html(resultHtml);
+    }  
+
+  });
+</script>

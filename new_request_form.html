@@ -79,6 +79,7 @@
 
     $('#newReqStatus').on("change", displayResolution);
     $('#newReqCancelBtn').click(cancelProcNewReq);
+    $('#procNewReqForm').submit(submitProcNewReq);
     
     function cancelProcNewReq(){
       $('.reqData').hide();
@@ -89,20 +90,37 @@
     }
     
     function displayResolution(){
-      console.log("Displaying Resolution");
       var $status = $('#newReqStatus').val();
       if($status == 'Denied'){
         $('#newReqRes').prop("required", true);
         $('#newReqRes').attr("required", "true");
         $('#newReqResGrp').show();
-//        console.log($('#newReqResGrp').html());
       }
       else{
         $('#newReqRes').prop("required", false);
         $('#newReqResGrp').hide();
-//        console.log($('#newReqResGrp').html());
       }
     }
-
+    
+    function submitProcNewReq(){
+      var $formObj = {
+        cost: Number($('#newReqCost').val()),
+        status: $('#newReqStatus').val(),
+        resolution: $('#newReqRes').val(),
+        request_id: $('#requestId').val(),
+        approver: $('#newReqApprover').val()
+      }
+    
+      google.script.run.withSuccessHandler(displayProcNewReqConf).processNewRequest($formObj);
+    }
+    
+    function displayProcNewReqConf(resultHtml){
+      var $output = $('#newReqConfirmation');
+      $output.html(resultHtml);
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $output.show();
+    }
+    
   });
 </script>

@@ -1,101 +1,60 @@
-<div class="text-center">
-  <h1 class="text-primary">Supply Request Form</h1>
-  <div class="col-md-10 col-offset-1 text-center">
-    <form class="form-horizontal" method="get" onsubmit="return false" id="supForm">
-    
-      <div class="form-group">
-        <label class="control-label col-md-3" for="requestor"></label>
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-addon">Name</span>
-            <input type="text" class="form-control col-md-6" name="requestor" id="requestor" required="true"
-            placeholder="Requestor Full Name">
-          </div> <!-- input-group -->
-        </div>
-      </div> <!-- form-gorup -->
-      
-      <div class="form-group">
-        <label class="control-label col-md-3" for="item"></label>
-        <div class="col-md-6">
-          <div class="input-group">
-            <span class="input-group-addon">Item</span>
-            <input type="text" class="form-control col-md-6" name="item"  id="item" required="true"
-            placeholder="Requested Item">
-          </div> <!-- input-group -->
-        </div>
-      </div> <!-- form-gorup -->
-      
-      <div class="form-group">
-        <label class="control-label col-md-3" for="qty"></label>
-        <div class="col-md-2">
-          <div class="input-group">
-            <span class="input-group-addon">Qty</span>
-            <input type="number" class="form-control col-md-6" min="1" name="qty" id="qty" required="true" placeholder="qty">
-          </div> <!-- input-group -->
-        </div>
-      </div> <!-- form-gorup -->
-      
-      <div class="form-group">
-        <label class="control-label col-md-3" for="priority"></label>
-        <div class="col-md-3">
-          <div class="input-group">
-            <span class="input-group-addon">Priority</span>
-            <select class="form-control col-md-6" name="priority" id="priority" required="true" placeholder="Priority"
-            data-toggle="popover" data-trigger="hover" data-placement="right" data-content="**High** -- instructional items needed for use 1-2 days from date of request;            
-            **Medium** -- instructional items needed for use 3-4 days from date of request;            
-            **Low** -- anything that is needed a week or so from the date of request">
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-            </select>
-          </div> <!-- input-group -->
-        </div>
-      </div> <!-- form-gorup -->
-      
-      <div class="form-group">
-        <label class="control-label col-md-3" for="description"></label>
-        <div class="col-md-8">
-          <div class="input-group">
-            <span class="input-group-addon">Description</span>
-            <textarea class="form-control col-md-8" rows="4" name="description" id="description" placeholder="Description">
-            </textarea>
-          </div> <!-- input-group -->
-        </div>
-      </div> <!-- form-gorup -->
-      
-      <div class="pull-center">
-        <button class="btn btn-default" type="reset" id="resetReq">Reset</button>
-        <button class="btn btn-primary" type="submit" id="reqSubBtn">Submit Request</button> 
-      </div>
-      
-    </form>
-  </div>
-</div> <!-- outer div -->
-
-
-
-<script>
-
-  $(function(){
+<div class="col-md-8 col-offset-2 text-center">
+  <form class="form-horizontal" id="reqForm">
   
-    $('#supForm').submit(submitRequest);
-    $('#priority').popover();
+    <div class="form-group">
+      <label class="control-label col-md-3" for="requestor"></label>
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon">Name</span>
+          <input type="text" class="form-control col-md-6" name="requestor" id="requestor" placeholder="Requestor Full Name">
+        </div> <!-- input-group -->
+      </div>
+    </div> <!-- form-gorup -->
     
-    function submitRequest(formObj){
-      var formObj = {
-        fullName: $('#requestor').val().trim(),
-        item: $('#item').val().trim(),
-        qty: Number($('#qty').val()),
-        priority: $('#priority').val(),
-        description: $('#description').val().trim(),    
-      }
-      
-      google.script.run.withSuccessHandler().addRequest(formObj);
-      
-      $('.page').hide();
-      $('#reqConfirm').show();
-    }
+    <div class="form-group">
+      <label class="control-label col-md-3" for="item"></label>
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon">Item</span>
+          <input type="text" class="form-control col-md-6" name="item"  id="item" placeholder="Requested Item">
+        </div> <!-- input-group -->
+      </div>
+    </div> <!-- form-gorup -->
     
-  });
-
-</script>
+    <div class="form-group">
+      <label class="control-label col-md-3" for="qty"></label>
+      <div class="col-md-3">
+        <div class="input-group">
+          <span class="input-group-addon">Qty</span>
+          <input type="number" class="form-control col-md-6" min="1" name="qty" id="qty" placeholder="qty">
+        </div> <!-- input-group -->
+      </div>
+    </div> <!-- form-gorup -->
+    
+    <div class="form-group">
+      <label class="control-label col-md-3" for="priority"></label>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">Priority</span>
+          <select class="form-control col-md-6" name="priority" id="priority" placeholder="Priority">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div> <!-- input-group -->
+      </div>
+    </div> <!-- form-gorup -->
+    
+    <div class="form-group">
+      <label class="control-label col-md-3" for="description"></label>
+      <div class="col-md-8">
+        <div class="input-group">
+          <span class="input-group-addon">Description</span>
+          <textarea class="form-control col-md-8" rows="4" name="description" id="description" placeholder="Description">
+          </textarea>
+        </div> <!-- input-group -->
+      </div>
+    </div> <!-- form-gorup -->
+    
+  </form>
+</div> <!-- outer div -->

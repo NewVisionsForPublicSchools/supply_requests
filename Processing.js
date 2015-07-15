@@ -1,3 +1,7 @@
+var dbString = PropertiesService.getScriptProperties().getProperty('DBSTRING');
+
+
+
 function getRequestsByRole(){
   var test, user, userQuery, roles, keys, requests;
   
@@ -80,5 +84,28 @@ function loadNewReqForm(request_id){
   html = HtmlService.createTemplateFromFile('new_request_form');
   html.request = getRequest(request_id);
   html.approver = Session.getActiveUser().getEmail();
+  return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function processNewRequest(formObj){
+  var test, queryArray, rQuery, aQuery, html;
+  
+  queryArray = [];
+  rQuery = 'UPDATE Requests r, Tracking t SET r.cost = "' + formObj.cost + '", t.status = "' + formObj.status
+           + '", t.resolution = "' + formObj.resolution + '", t.approver = "' + formObj.approver
+           + '" WHERE r.request_id = "' + formObj.request_id + '" AND t.request_id = r.request_id';
+  queryArray.push(rQuery);
+  
+  if(formObj.status == 'Approved'){
+  aQuery = 'UPDATE Tracking SET approval = "' + new Date() + '" WHERE request_id = "' + formObj.request_id + '"';
+  queryArray.push(aQuery);
+  }
+  
+  NVGAS.insertSqlRecord(dbString, queryArray);
+  
+  html = HtmlService.createTemplateFromFile('process_new_request_confirmation');
+  html.request = formObj.request_id;
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }

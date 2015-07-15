@@ -1,4 +1,4 @@
-var dbString = '//ga-sql-bootcamp:demodb0615/Supply_Requests';
+var dbString = PropertiesService.getScriptProperties().getProperty('DBSTRING');
 var requestColumns = 'request_id,full_name,item,qty,priority,description,date,username';
 var trackingColumns = 'request_id,status,confirmation,bus_mgr_alert,dso_alert,principal_alert,cmo_alert,approval,denial,'
                       + 'queue';
