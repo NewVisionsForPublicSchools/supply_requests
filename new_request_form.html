@@ -30,10 +30,16 @@
           <div class="input-group">
             <span class="input-group-addon">Status</span>
             <select class="form-control col-md-6" name="newReqStatus" id="newReqStatus" required="true" placeholder="Status">
-              <option>New</option>
-              <option>Under Review</option>
-              <option>Approved</option>
-              <option>Denied</option>
+              <optgroup class="newReqOpt" id="newReqOpt1" label="Request < $100">
+                <option>New</option>
+                <option>Under Review</option>
+                <option>Approved</option>
+                <option>Denied</option>
+              </optgroup>
+              <optgroup class="newReqOpt" id="newReqOpt2" label="Request >= $100">
+                <option>New</option>
+                <option>Under Review</option>
+              </optgroup>
             </select>
           </div> <!-- input-group -->
         </div>
@@ -78,6 +84,7 @@
   $(function(){
 
     $('#newReqStatus').on("change", displayResolution);
+    $('#newReqCost').on("change", updateStatusOptions)
     $('#newReqCancelBtn').click(cancelProcNewReq);
     $('#procNewReqForm').submit(submitProcNewReq);
     
@@ -87,6 +94,19 @@
       $('#actionItems').show();
       $('#newReqForm').hide();
       $('#nrBtn').click();
+    }
+    
+    function updateStatusOptions(){
+      var $cost = $('#newReqCost').val();
+      console.log($cost);
+      if($cost > 100){
+        $('.newReqOpt').hide();
+        $('#newReqOpt2').show();       
+      }
+      else{
+        $('.newReqOpt').hide();
+        $('#newReqOpt1').show();
+      }
     }
     
     function displayResolution(){
