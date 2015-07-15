@@ -104,8 +104,55 @@ function processNewRequest(formObj){
   }
   
   NVGAS.insertSqlRecord(dbString, queryArray);
+  checkApprovalStatus(formObj);
   
   html = HtmlService.createTemplateFromFile('process_new_request_confirmation');
   html.request = formObj.request_id;
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function checkApprovalStatus(approvalObj){
+  var test, status, request;
+  
+  status = approvalObj.status;
+  request = approvalObj.request_id;
+  
+  switch (status){
+    case 'Approved':
+      sendApprovalEmail(request);
+      break;
+      
+    case 'Denied':
+      sendDenialEmail(request);
+      break;
+      
+    default:
+      break;
+  } 
+}
+
+
+
+function sendApprovalEmail(request_id){
+  var test, request, recipient, subject, html, template, copyList;
+  
+  request = getRequest(request_id);
+  recipient = request.username;
+  subject = "DO NOT REPLY: Supply Request Approved | " + request.request_id;
+  html = HtmlService.createTemplateFromFile('approval_email');
+  html.request = request;
+  template = html.evaluate().getContent();
+  copyList = PropertiesService.getScriptProperties().getProperty('busMgr') + ","
+             + PropertiesService.getScriptProperties().getProperty('dso');
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
+                                            cc: copyList});
+}
+
+
+
+function sendDenialEmail(request_id){
+  
 }

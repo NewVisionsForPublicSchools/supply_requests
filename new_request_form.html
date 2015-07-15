@@ -30,13 +30,13 @@
           <div class="input-group">
             <span class="input-group-addon">Status</span>
             <select class="form-control col-md-6" name="newReqStatus" id="newReqStatus" required="true" placeholder="Status">
-              <optgroup class="newReqOpt" id="newReqOpt1" label="Request < $100">
+              <optgroup class="newReqOpt" id="newReqOpt1" label="Request < $1000">
                 <option>New</option>
                 <option>Under Review</option>
                 <option>Approved</option>
                 <option>Denied</option>
               </optgroup>
-              <optgroup class="newReqOpt" id="newReqOpt2" label="Request >= $100">
+              <optgroup class="newReqOpt" id="newReqOpt2" label="Request >= $1000">
                 <option>New</option>
                 <option>Under Review</option>
               </optgroup>
@@ -99,7 +99,7 @@
     function updateStatusOptions(){
       var $cost = $('#newReqCost').val();
       console.log($cost);
-      if($cost > 100){
+      if($cost > 1000){
         $('.newReqOpt').hide();
         $('#newReqOpt2').show();       
       }
