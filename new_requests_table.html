@@ -1,12 +1,13 @@
 <div>
-  <h3 class="pull-left text-primary">New Requests</h3>
+  <h3 class="pull-left text-nvGray">Requests To Be Processed</h3>
   <table id="newReqTbl" class="table table-striped">
     <tr>
-      <th class="bg-primary text-center">Id</th>      
+      <th class="bg-primary text-center">Request</th>      
       <th class="bg-primary text-center">Full Name</th>
       <th class="bg-primary text-center">Item</th>
       <th class="bg-primary text-center">Description</th>
       <th class="bg-primary text-center">Qty</th>
+      <th class="bg-primary text-center">Cost</th>
       <th class="bg-primary text-center">Priority</th>
       <th class="bg-primary text-center">Date Submitted</th>
       <th class="bg-primary text-center">Status</th>
@@ -21,6 +22,7 @@
         <td><?= data[i].item ?></td>
         <td><?= data[i].description ?></td>
         <td><?= data[i].qty ?></td>
+        <td><?= data[i].cost || "TBD" ?></td>
         <td><?= data[i].priority ?></td>
         <td><?= data[i].date ?></td>
         <td><?= data[i].status ?></td>
