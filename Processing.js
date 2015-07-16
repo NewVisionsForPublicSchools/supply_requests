@@ -33,16 +33,18 @@ function getRequestActionItems(){
   nr = queue.filter(function(e){
     return (e.status == 'New') || (e.status == 'Under Review');
   });
-  debugger;
+
   tbf = queue.filter(function(e){
     return e.status == "Approved";
   });
-  debugger;
+
   html = HtmlService.createTemplateFromFile('action_items');
   html.newClass = nr.length > 0 ? 'nvRed' : 'nvGreen';
   html.fulfillClass = tbf.length > 0 ? 'nvRed' : 'nvGreen';
   html.nr = nr.length;
   html.tbf = tbf.length;
+  html.role = queue[0].queue;
+
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
