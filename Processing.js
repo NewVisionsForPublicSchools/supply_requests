@@ -212,11 +212,25 @@ function sendProcessNotificationEmail(request_id){
   html.request = request;
   html.url = PropertiesService.getScriptProperties().getProperty('scriptUrl');
   template = html.evaluate().getContent();
-  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+  
+  switch(request.queue){
+    case "DSO":
+      ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+      break;
+    case "P":
+      ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%" OR roles LIKE "%DSO%"';
+      break;
+    case "CMO":
+      ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%" OR roles LIKE "%DSO%" OR roles LIKE "%P%"';
+    default:
+      ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+      break;
+  }
+  
   copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
     return e.username;
   }).join();
-  
+
   GmailApp.sendEmail(recipients, subject,"",{htmlBody: template,
                                             cc: copyList});
 }
