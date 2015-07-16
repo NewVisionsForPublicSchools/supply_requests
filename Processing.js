@@ -65,21 +65,6 @@ function loadNewRequests(){
 
 
 
-function loadToBeFulfilled(){
-  var test, queue, data, html;
-  
-  queue = JSON.parse(CacheService.getUserCache().get('roleRequests'))
-  data = queue.filter(function(e){
-    return e.status == 'Approved';
-  });
-  
-  html = HtmlService.createTemplateFromFile('to_be_fulfilled_table');
-  html.data = data;
-  return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();  
-}
-
-
-
 function loadNewReqForm(request_id){
   var test, html;
   Logger.log(request_id)
