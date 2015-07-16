@@ -28,7 +28,7 @@ function addRequest(formObj){
             + request.id + '", "'
             + request.status + '", "'
             + "BM" + '")';
-
+PropertiesService.getScriptProperties().setProperty('TEST', request);
   queryArray.push(reqQuery);
   queryArray.push(trackQuery);
 

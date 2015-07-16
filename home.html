@@ -54,8 +54,6 @@ $(function(){
   function loadHomeActions(){
     google.script.run.withSuccessHandler(updateActionItems).getRequestActionItems();
     google.script.run.withSuccessHandler(verifyUser).validateUser();
-//    var $reqs = $('#newReqNum').val();
-//    console.log($reqs);
   }
   
   function loadReqForm(resultHtml){

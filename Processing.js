@@ -7,11 +7,11 @@ function getRequestsByRole(){
   
 //  user = 'approver1@newvisions.org';
   user = Session.getActiveUser().getEmail();
-  userQuery = 'SELECT * FROM users WHERE username = "' + user + '"'; 
+  userQuery = 'SELECT roles FROM users WHERE username = "' + user + '"'; 
   roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
     return e.roles;
   });
-  
+ 
   requests = JSON.stringify(roles.map(function(e){
     var query = 'SELECT * FROM Requests r INNER JOIN Tracking t on r.request_id = t.request_id WHERE t.queue = "'
       + e + '"';
@@ -19,10 +19,9 @@ function getRequestsByRole(){
   }).reduce(function(e){
     return e;
   }));
-  
+
   CacheService.getUserCache().put('roleRequests', requests);
   return requests;
-  debugger;
 }
 
 
@@ -32,12 +31,13 @@ function getRequestActionItems(){
   
   queue = JSON.parse(getRequestsByRole());
   nr = queue.filter(function(e){
-    return e.status == 'New';
+    return (e.status == 'New') || (e.status == 'Under Review');
   });
+  debugger;
   tbf = queue.filter(function(e){
     return e.status == "Approved";
   });
-  
+  debugger;
   html = HtmlService.createTemplateFromFile('action_items');
   html.newClass = nr.length > 0 ? 'nvRed' : 'nvGreen';
   html.fulfillClass = tbf.length > 0 ? 'nvRed' : 'nvGreen';
@@ -53,7 +53,7 @@ function loadNewRequests(){
   
   queue = JSON.parse(CacheService.getUserCache().get('roleRequests')) || getRequestsByRole();
   data = queue.filter(function(e){
-    return e.status == 'New';
+    return (e.status == 'New') || (e.status == 'Under Review');
   });
   
   html = HtmlService.createTemplateFromFile('new_requests_table');

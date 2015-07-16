@@ -4,16 +4,13 @@ var userColumns = 'username,roles';
 
 
 function validateUser(){
-  var test, currentUser, query, validUser, result;
-  Logger.log("Hellow World");
+  var test, currentUser, query, validUser;
+
   currentUser = Session.getActiveUser().getEmail();
-  query = 'SELECT * FROM users';
+//  currentUser = 'approver1@charter.newvisions.org';
+  query = 'SELECT * FROM users WHERE username = "' + currentUser + '"';
   
-  validUser = NVGAS.getSqlRecords(dbString, query).map(function(e){
-    return e.username;
-  }).filter(function(e){
-    return e == currentUser;
-  })[0];
- 
+  validUser = NVGAS.getSqlRecords(dbString, query)[0] ? NVGAS.getSqlRecords(dbString, query)[0].username : "";
+
   return validUser ? true : false;
 }
