@@ -160,7 +160,7 @@ function checkApprovalStatus(approvalObj){
 
 
 function sendApprovalEmail(request_id){
-  var test, request, recipient, subject, html, template, copyList;
+  var test, request, recipient, subject, html, template, ccQuery, copyList;
   
   request = getRequest(request_id);
   recipient = request.username;
@@ -168,8 +168,10 @@ function sendApprovalEmail(request_id){
   html = HtmlService.createTemplateFromFile('approval_email');
   html.request = request;
   template = html.evaluate().getContent();
-  copyList = PropertiesService.getScriptProperties().getProperty('busMgr') + ","
-             + PropertiesService.getScriptProperties().getProperty('dso');
+  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%DSO%" OR roles LIKE "%BM%"';
+  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
+    return e.username;
+  }).join();
   
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
                                             cc: copyList});
@@ -178,7 +180,7 @@ function sendApprovalEmail(request_id){
 
 
 function sendDenialEmail(request_id){
-  var test, request, recipient, subject, html, template, copyList;
+  var test, request, recipient, subject, html, template, ccQuery, copyList;
   
   request = getRequest(request_id);
   recipient = request.username;
@@ -186,8 +188,10 @@ function sendDenialEmail(request_id){
   html = HtmlService.createTemplateFromFile('denial_email');
   html.request = request;
   template = html.evaluate().getContent();
-  copyList = PropertiesService.getScriptProperties().getProperty('busMgr') + ","
-             + PropertiesService.getScriptProperties().getProperty('dso');
+  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%DSO%" OR roles LIKE "%BM%"';
+  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
+    return e.username;
+  }).join();
   
   GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
                                             cc: copyList});
