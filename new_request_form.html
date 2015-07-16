@@ -46,6 +46,10 @@
                 <option>Approved</option>
                 <option>Denied</option>
               </optgroup>
+              <optgroup class="newReqOpt" id="newReqOpt4" label="Request >= $10000">
+                <option>Under Review</option>
+                <option>Denied</option>
+              </optgroup>
             </select>
           </div> <!-- input-group -->
         </div>
@@ -110,9 +114,8 @@
     }
     
     function updateStatusOptions(){
+      var $cost = $('#newReqCost').val();
       if($('#reqQueue').val() == "BM"){
-        var $cost = $('#newReqCost').val();
-        console.log($cost);
         if($cost > 1000){
           $('.newReqOpt').hide();
           $('#newReqOpt2').show();       
@@ -123,8 +126,14 @@
         }
       }
       else{
-         $('.newReqOpt').hide();
+        if(($('#reqQueue').val() == "P") && ($cost >= 10000)){
+          $('.newReqOpt').hide();
+          $('#newReqOpt4').show();
+        }
+        else{
+          $('.newReqOpt').hide();
           $('#newReqOpt3').show();
+          }
       }
     }
     
