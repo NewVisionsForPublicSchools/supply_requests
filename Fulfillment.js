@@ -64,21 +64,21 @@ function processTbf(tbfObj){
 
 
 function sendOrderedEmail(request_id){
-  var test;
+  var test, request, recipient, subject, html, template, ccQuery, copyList;
   
-//  request = getRequest(request_id);
-//  recipient = request.username;
-//  subject = "DO NOT REPLY: Supply Request Ordered | " + request.request_id;
-//  html = HtmlService.createTemplateFromFile('ordered_email');
-//  html.request = request;
-//  template = html.evaluate().getContent();
-//  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%DSO%" OR roles LIKE "%BM%"';
-//  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
-//    return e.username;
-//  }).join();
-//  
-//  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
-//                                            cc: copyList});
+  request = getRequest(request_id);
+  recipient = request.username;
+  subject = "DO NOT REPLY: Supply Request Ordered | " + request.request_id;
+  html = HtmlService.createTemplateFromFile('ordered_email');
+  html.request = request;
+  template = html.evaluate().getContent();
+  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
+    return e.username;
+  }).join();
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
+                                            cc: copyList});
 }
 
 
