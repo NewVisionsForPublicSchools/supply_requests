@@ -31,11 +31,11 @@ function getRequestActionItems(){
   
   queue = JSON.parse(getRequestsByRole());
   nr = queue.filter(function(e){
-    return (e.status == 'New') || (e.status == 'Under Review');
+    return (e.status == 'New') || (e.status =='Under Review');
   });
 
   tbf = queue.filter(function(e){
-    return e.status == "Approved";
+    return (e.status == 'Approved') || (e.status =='Ordered') || (e.status =='Received');
   });
 
   html = HtmlService.createTemplateFromFile('action_items');
@@ -55,7 +55,7 @@ function loadNewRequests(){
   
   queue = JSON.parse(CacheService.getUserCache().get('roleRequests')) || getRequestsByRole();
   data = queue.filter(function(e){
-    return (e.status == 'New') || (e.status == 'Under Review');
+    return (e.status == 'New') || (e.status =='Under Review');
   });
   
   html = HtmlService.createTemplateFromFile('new_requests_table');

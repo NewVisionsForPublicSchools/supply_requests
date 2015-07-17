@@ -14,7 +14,7 @@ function loadToBeFulfilled(){
   
   queue = JSON.parse(CacheService.getUserCache().get('roleRequests'))
   data = queue.filter(function(e){
-    return e.status == 'Approved';
+    return (e.status == 'Approved') || (e.status =='Ordered') || (e.status =='Received');
   });
   
   html = HtmlService.createTemplateFromFile('to_be_fulfilled_table');
@@ -41,7 +41,7 @@ function processTbf(tbfObj){
       
     case 'Received':
       statusQuery = 'UPDATE Tracking SET received = "' + new Date() + '" WHERE request_id = "' + request + '"';
-      sendReceviedEmail(request);
+      sendReceivedEmail(request);
       break;
       
     case 'Fulfilled':
