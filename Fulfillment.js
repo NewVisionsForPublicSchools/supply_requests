@@ -84,7 +84,21 @@ function sendOrderedEmail(request_id){
 
 
 function sendReceivedEmail(request_id){
+  var test, request, recipient, subject, html, template, ccQuery, copyList;
   
+  request = getRequest(request_id);
+  recipient = request.username;
+  subject = "DO NOT REPLY: Supply Request Received | " + request.request_id;
+  html = HtmlService.createTemplateFromFile('received_email');
+  html.request = request;
+  template = html.evaluate().getContent();
+  ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+  copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
+    return e.username;
+  }).join();
+  
+  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template,
+                                            cc: copyList});
 }
 
 
