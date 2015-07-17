@@ -1,3 +1,85 @@
-<div>
-  Hello Fulfill Form
+<div class="text-center">
+  <h2 class="text-nvGray">Supply Request Fulfillment</h2>
+  <br/>
+  <div class=""> 
+    <form class="form-horizontal" method="get" onsubmit="return false" id="fulfillForm">
+      
+      <div class="row well col-md-4 col-md-offset-4">
+        <h4 class=""><b>Request: </b><?= request.request_id ?></h4>
+        <h4 class=""><b>Requester: </b><?= request.full_name ?></h4>
+        <h4 class=""><b>Item: </b><?= request.item ?></h4>
+        <h4 class=""><b>Qty: </b><?= request.qty ?></h4>
+        <h4 class=""><b>Cost: </b><?= request.cost || "TBD" ?></h4>
+      </div>
+      <br/>
+      
+      <div class="col-md-10 col-md-offset-1">
+        <div class="form-group">
+          <label class="control-label col-md-3" for="fulfillStatus"></label>
+          <div class="col-md-3">
+            <div class="input-group">
+              <span class="input-group-addon">Status</span>
+              <select class="form-control col-md-6" name="fulfillStatus" id="fulfillStatus" required="true" placeholder="Status">
+                <option>Ordered</option>
+                <option>Received</option>
+                <option>Fulfilled</option>
+              </select>
+            </div> <!-- input-group -->
+          </div>
+        </div> <!-- form-gorup -->
+        
+        <div class="form-group">
+          <label class="control-label col-md-3" for="tbfId"></label>
+          <input type="text" class="form-control col-md-6" name="tbfId" id="tbfId" style="display:none"
+                 value=<?= request.request_id ?>>
+        </div>
+        
+        <div class="form-group">
+          <label class="control-label col-md-3" for="tbfApprover"></label>
+          <input type="text" class="form-control col-md-6" name="tbfApprover" id="tbfApprover" style="display:none"
+                 value=<?= approver ?>>
+        </div>
+        
+        <div class="form-group">
+          <label class="control-label col-md-3" for="tbfQueue"></label>
+          <input type="text" class="form-control col-md-6" name="tbfQueue" id="tbfQueue" style="display:none"
+                 value=<?= request.queue ?>>
+        </div>
+        
+        <div class="pull-center">
+          <button class="btn btn-default" id="tbfCancelBtn">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="tbfSubBtn">Submit</button> 
+        </div>
+      </div>
+      
+    </form>
+  </div>
 </div>
+
+
+
+<script>
+  $(function(){
+    
+    $('#fulfillForm').submit(submitFulfill);
+    
+    function submitFulfill(){
+      var $formObj = {
+        status: $('#fulfillStatus').val(),
+        request_id: $('#tbfId').val(),
+        approver: $('#tbfApprover').val()
+      };
+      
+      google.script.run.withSuccessHandler(displayTbfConf).processTbf($formObj);    
+    }
+    
+    function displayTbfConf(resultHtml){
+      var $output = $('#newReqConfirmation');
+      $output.html(resultHtml);
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $output.show();
+    }
+    
+  });
+</script>

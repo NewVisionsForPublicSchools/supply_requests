@@ -2,7 +2,7 @@
   <h3 class="pull-left text-nvGray">Requests To Be Fulfilled</h3>
   <table id="tbfTbl" class="table table-striped">
     <tr>
-      <th class="bg-primary text-center">Id</th>      
+      <th class="bg-primary text-center">Request</th>      
       <th class="bg-primary text-center">Full Name</th>
       <th class="bg-primary text-center">Item</th>
       <th class="bg-primary text-center">Description</th>
@@ -11,6 +11,8 @@
       <th class="bg-primary text-center">Date Submitted</th>
       <th class="bg-primary text-center">Status</th>
       <th class="bg-primary text-center">Approver</th>
+      <th class="bg-primary text-center">Ordered</th>
+      <th class="bg-primary text-center">Received</th>
     </tr> <!-- close header row -->
     
     <? for(var i=0;i<data.length;i++){ ?>
@@ -26,6 +28,8 @@
         <td><?= data[i].date ?></td>
         <td><?= data[i].status ?></td>
         <td><?= data[i].approver ?></td>
+        <td><?= data[i].ordered ?></td>
+        <td><?= data[i].received ?></td>
       </tr>
     <? } ?>
   </table>
