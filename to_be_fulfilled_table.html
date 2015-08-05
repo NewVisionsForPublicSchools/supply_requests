@@ -1,8 +1,7 @@
 <div>
   <h3 class="pull-left text-nvGray">Requests To Be Fulfilled</h3>
   <table id="tbfTbl" class="table table-striped">
-    <tr>
-      <th class="bg-primary text-center">Request</th>      
+    <tr>      
       <th class="bg-primary text-center">Requested By</th>
       <th class="bg-primary text-center">Item</th>
       <th class="bg-primary text-center">Description</th>
@@ -13,13 +12,11 @@
       <th class="bg-primary text-center">Approver</th>
       <th class="bg-primary text-center">Ordered</th>
       <th class="bg-primary text-center">Received</th>
+      <th class="bg-primary text-center">Request</th>
     </tr> <!-- close header row -->
     
     <? for(var i=0;i<data.length;i++){ ?>
       <tr>
-        <td><button class="btn btn-xs btn-primary 2bFulBtn" value=<?= data[i].request_id ?>>
-          <?= data[i].request_id ?>
-        </button></td>
         <td><?= data[i].full_name ?></td>
         <td><?= data[i].item ?></td>
         <td><?= data[i].description ?></td>
@@ -30,6 +27,9 @@
         <td><?= data[i].approver ?></td>
         <td><?= data[i].ordered ?></td>
         <td><?= data[i].received ?></td>
+        <td><button class="btn btn-xs btn-primary 2bFulBtn" value=<?= data[i].request_id ?>>
+          <?= data[i].request_id ?>
+        </button></td>
       </tr>
     <? } ?>
   </table>

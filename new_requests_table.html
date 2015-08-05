@@ -1,8 +1,7 @@
 <div>
   <h3 class="pull-left text-nvGray">Requests To Be Processed</h3>
   <table id="newReqTbl" class="table table-striped">
-    <tr>
-      <th class="bg-primary text-center">Request</th>      
+    <tr>      
       <th class="bg-primary text-center">Requested By</th>
       <th class="bg-primary text-center">Item</th>
       <th class="bg-primary text-center">Description</th>
@@ -11,13 +10,11 @@
       <th class="bg-primary text-center">Priority</th>
       <th class="bg-primary text-center">Date Submitted</th>
       <th class="bg-primary text-center">Status</th>
+      <th class="bg-primary text-center">Request</th>
     </tr> <!-- close header row -->
     
     <? for(var i=0;i<data.length;i++){ ?>
       <tr>
-        <td><button class="btn btn-xs btn-primary newReqLink" value=<?= data[i].request_id ?>>
-          <?= data[i].request_id ?>
-        </button></td>
         <td><?= data[i].full_name ?></td>
         <td><?= data[i].item ?></td>
         <td><?= data[i].description ?></td>
@@ -26,6 +23,9 @@
         <td><?= data[i].priority ?></td>
         <td><?= data[i].date ?></td>
         <td><?= data[i].status ?></td>
+        <td><button class="btn btn-xs btn-primary newReqLink" value=<?= data[i].request_id ?>>
+          <?= data[i].request_id ?>
+        </button></td>
       </tr>
     <? } ?>
   </table>
