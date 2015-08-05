@@ -2,6 +2,7 @@
   <h1>Supply Request Denied</h1>
   <p>Dear <b><?= request.full_name ?></b>,</p>
   <p>Your request for <b><?= request.qty ?> <?= request.item ?></b> has been denied.</p>
+  <p>The reason given for the denial of your request is as follows: <em><?= request.resolution ?></em>
   <p>If you would like a further explanation please contact ams4businessmgr@charter.newvisions.org.</p>
   <p>Thank you.</p>
 </div>
