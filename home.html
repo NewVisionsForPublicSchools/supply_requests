@@ -52,7 +52,6 @@ $(function(){
   $('#procReqBtn').click(loadProcPage);
   
   function loadHomeActions(){
-    google.script.run.withSuccessHandler(updateActionItems).getRequestActionItems();
     google.script.run.withSuccessHandler(verifyUser).validateUser();
   }
   
@@ -63,7 +62,11 @@ $(function(){
   }
   
   function loadProcPage(){
+    google.script.run.withSuccessHandler(updateActionItems).getRequestActionItems();
     $('.page').hide();
+    $('.reqData').hide();
+    $('.reqForm').hide();
+    $('#actionItems').show();
     $('#procPage').show();
   }
   
