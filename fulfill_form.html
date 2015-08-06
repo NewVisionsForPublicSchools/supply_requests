@@ -48,7 +48,7 @@
         
         <div class="pull-center">
           <button class="btn btn-default" id="tbfCancelBtn">Cancel</button>
-          <button class="btn btn-primary" type="submit" id="tbfSubBtn">Submit</button> 
+          <button class="btn btn-primary" id="tbfSubBtn">Submit</button> 
         </div>
       </div>
       
@@ -61,7 +61,16 @@
 <script>
   $(function(){
     
-    $('#fulfillForm').submit(submitFulfill);
+    $('#tbfSubBtn').click(submitFulfill);
+    $('#tbfCancelBtn').click(cancelTbf);
+    
+    function cancelTbf(){
+      $('.reqData').hide();
+      $('.reqForm').hide();
+      $('#actionItems').show();
+      $('#newReqForm').hide();
+      $('#tbfBtn').click();
+    }
     
     function submitFulfill(){
       var $formObj = {
