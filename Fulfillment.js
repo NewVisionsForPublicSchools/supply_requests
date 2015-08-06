@@ -3,7 +3,7 @@ function loadFulfillForm(request_id){
   Logger.log(request_id)
   html = HtmlService.createTemplateFromFile('fulfill_form');
   html.request = getRequest(request_id);
-  html.approver = Session.getActiveUser().getEmail();
+  html.approver = PropertiesService.getUserProperties().getProperty('currentUser');
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 

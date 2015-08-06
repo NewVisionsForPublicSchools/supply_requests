@@ -9,7 +9,7 @@ function addRequest(formObj){
   var nextId = PropertiesService.getScriptProperties().getProperty('nextReqId')
   var request = formObj;
   request.date = new Date();
-  request.username = Session.getActiveUser().getEmail();
+  request.username = PropertiesService.getUserProperties().getProperty('currentUser');
   request.id = "AMS4SR" + nextId.toString();
   request.status = "New";
   var queryArray = [];

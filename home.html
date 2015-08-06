@@ -21,11 +21,31 @@
   
       <!-- Home page -->
       <div class="page" id="home">
-        <div class="row vertical-center">
-          <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
-          <button class="btn btn-lg btn-primary btn-validated" type="button" id="procReqBtn" disabled="disabled">
-            Process Supply Requests <!-- <span class="badge">4</span> -->
-          </button>
+        <div>
+          <div class="row text-center">
+            <h1 class="text-nvBlue">AMS IV Supply Requests</h1>
+          </div>
+          <div class="row vertical-center" id="homeBtns" style="display:none">
+            <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
+            <button class="btn btn-lg btn-primary btn-validated" type="button" id="procReqBtn" disabled="disabled">
+              Process Supply Requests <!-- <span class="badge">4</span> -->
+            </button>
+          </div> <!-- home btns -->
+          <div id="usrValid" class="row vertical-center">
+           <form id="userForm" class="form-inline" onsubmit="return false">
+             <div class="form-group">
+              <label class="control-label col-md-3" for="usrEmail"></label>
+              <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon">@</span>
+                  <input type="email" class="form-control col-md-6" name="usrEmail"  id="usrEmail"
+                  placeholder="Your New Visions email">
+                </div> <!-- input-group -->
+              </div>
+            </div> <!-- form-gorup -->
+            <button class="btn btn-primary" id="usrEmailBtn">Set Email</button>
+           </form>  
+          </div>
         </div>
       </div>
       
@@ -50,9 +70,32 @@ $(function(){
   $(document).ready(loadHomeActions);
   $('#subReqBtn').click(loadReqForm);
   $('#procReqBtn').click(loadProcPage);
+  $('#usrEmailBtn').click(getUserEmail);
+  
+  function getUserEmail(){
+    var $email = $('#usrEmail').val().trim();
+    google.script.run.withSuccessHandler(showButtons).setCurrentUser($email);
+  }
+  
+  function showButtons(){
+    google.script.run.withSuccessHandler(verifyUser).validateUser();
+    $('#usrValid').hide();
+    $('#homeBtns').show();
+    $('#reqBtn').prop('disabled', false);
+  }
   
   function loadHomeActions(){
-    google.script.run.withSuccessHandler(verifyUser).validateUser();
+    google.script.run.withSuccessHandler(usernameCheck).getCurrentUser();
+  }
+  
+  function usernameCheck(answer){
+    if(answer == true){
+      showButtons();
+    }
+    else{
+      $('#homeBtns').hide();
+      $('#usrValid').show();
+    }
   }
   
   function loadReqForm(resultHtml){

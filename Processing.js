@@ -3,11 +3,11 @@ var dbString = PropertiesService.getScriptProperties().getProperty('DBSTRING');
 
 
 function getRequestsByRole(){
-  var test, user, userQuery, roles, keys, requests;
+  var test, USER, userQuery, roles, keys, requests;
   
 //  user = 'approver1@newvisions.org';
-  user = Session.getActiveUser().getEmail();
-  userQuery = 'SELECT roles FROM users WHERE username = "' + user + '"'; 
+  USER = PropertiesService.getUserProperties().getProperty('currentUser');
+  userQuery = 'SELECT roles FROM users WHERE username = "' + USER + '"'; 
   roles = NVGAS.getSqlRecords(dbString, userQuery).map(function(e){
     return e.roles;
   });
@@ -70,7 +70,7 @@ function loadNewReqForm(request_id){
   Logger.log(request_id)
   html = HtmlService.createTemplateFromFile('new_request_form');
   html.request = getRequest(request_id);
-  html.approver = Session.getActiveUser().getEmail();
+  html.approver = PropertiesService.getUserProperties().getProperty('currentUser');
   return html.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
