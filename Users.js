@@ -1,4 +1,4 @@
-var dbString = '//ga-sql-bootcamp:demodb0615/Supply_Requests';
+var dbString = PropertiesService.getScriptProperties().getProperty('DBSTRING');
 var userColumns = 'username,roles';
 
 
