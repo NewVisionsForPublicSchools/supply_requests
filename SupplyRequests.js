@@ -62,16 +62,19 @@ function sendConfirmation(request){
 
 
 function sendBusMgrAlert(request){
-  var test, recipient, subject, html, template, alertQuery, statusQuery;
+  var test, recipientQuery, recipients, subject, html, template, alertQuery, statusQuery;
   
-  recipient = PropertiesService.getScriptProperties().getProperty('busMgr');
+  recipientQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
+  recipients = NVGAS.getSqlRecords(dbString, recipientQuery).map(function(e){
+    return e.username;
+  }).join();
   subject = request.qty + " " + request.item + " | Request Submitted | " + request.id
   html = HtmlService.createTemplateFromFile('busMgr_alert_email');
   html.request = request;
   html.url = PropertiesService.getScriptProperties().getProperty('scriptUrl');
   template = html.evaluate().getContent();
   
-  GmailApp.sendEmail(recipient, subject,"",{htmlBody: template});
+  GmailApp.sendEmail(recipients, subject,"",{htmlBody: template});
   
   alertQuery = 'UPDATE Tracking SET bus_mgr_alert = "' + new Date() + '" WHERE request_id = "' + request.id + '"';
   NVGAS.updateSqlRecord(dbString, [alertQuery]);
