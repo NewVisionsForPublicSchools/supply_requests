@@ -1,18 +1,47 @@
-<div>
-  <h1>Supply Request Needs Approval</h1>
-  <p>A request has been submitted and requires approval.</p>
-  <ul>
-    <li>Date:  <?= request.date ?></li>
-    <li>Name:  <?= request.full_name ?></li>
-    <li>Email:  <?= request.username ?></li>
-    <li>Quantity: <?= request.qty ?></li>
-    <li>Item:  <?= request.item ?></li>
-    <li>Description:  <?= request.description ?></li>
-    <li>Priority:  <?= request.priority ?></li>
-    <li>Cost:  $<?= request.cost ?></li>
-  </ul>
-  <p><b>ACTION REQUIRED: Please log into the <a href="<?= url ?>">
-        Supply Request Portal</a> and navigate to the <em>Process Supply Request</em> page to process this request.</b></p>
-  <p>Thank you.</p>
-
+<div align="center" id="myDiv" style="background-color:#F5F5F5; padding: 100px;">
+	<table id="myTable" width="70%" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff; padding: 50px;">
+		<tr><td align="center">
+			<img src="https://www.googledrive.com/host/0B-y5PxJT5zp1b0EwZHo0SkU0ZmM/NVCHS_Logo_Small.png">
+		</td></tr>
+		<tr><td align="center">
+			<!-- padding --><div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>
+			<div style="line-height: 44px;">
+				<font face="Serifa, Rockwell, sans-serif" size="5" color="#006CB7" style="font-size: 34px;">
+				<span style="font-family: Serifa, Rockwell, sans-serif; font-size: 34px; color: #006CB7;">
+					AMS IV Supply Request
+				</span></font>
+			</div>
+			<!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;"> </div>
+		</td></tr>
+		<tr><td align="center">
+			<div style="line-height: 24px;">
+				<font face="Serifa 45 Light, Calibri, sans-serif" size="4" color="#57697e" style="font-size: 15px;">
+				<span style="font-family: Serifa 45 Light, Calibri, sans-serif; font-size: 15px; color: #57697e;">
+					A request has been submitted and requires approval:<br>
+					<table class="data" style="font-family:Calibri; font-size:15px; color:#57697e;">
+					    <tr><td>Date:</td><td style="font-weight:bold;"><?= request.date ?></td></tr>
+					    <tr><td>Requested By:</td><td style="font-weight:bold;"><?= request.full_name ?></td></tr>
+					    <tr><td>Email:</td><td style="font-weight:bold;"><?= request.username ?></td></tr>
+					    <tr><td>Quantity:</td><td style="font-weight:bold;"><?= request.qty ?></td></tr>
+					    <tr><td>Item:</td><td style="font-weight:bold;"><?= request.item ?></td></tr>
+					    <tr><td>Description:</td><td style="font-weight:bold;"><?= request.description ?></td></tr>
+					    <tr><td>Priority:</td><td style="font-weight:bold;"><?= request.priority ?></td></tr>
+					    <tr><td>Cost:</td><td style="font-weight:bold;">$<?= request.cost ?></td></tr>
+					</table>
+					<br><br>
+					<b>ACTION REQUIRED:</b><br>Please log into the <em>Supply Request Portal</em> and navigate<br> to the <em>Process Supply Request</em> page to process this request.
+				</span></font>
+			</div>
+			<!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;"> </div>
+		</td></tr>
+		<tr><td align="center">
+			<div style="line-height: 24px;">
+				<a href="<?= url ?>" class="myButton" style="background-color:#D71920; -moz-border-radius:3px;
+                -webkit-border-radius:3px; border-radius:3px; display:inline-block; cursor:pointer; color:#ffffff;
+                font-family:Calibri; font-family:Calibri; font-size:15px; padding:9px 23px; text-decoration:none;">
+                Supply Request Portal</a>
+			</div>
+			<!-- padding --><div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>
+		</td></tr>
+	</table>		
 </div>
