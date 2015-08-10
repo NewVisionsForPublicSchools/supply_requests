@@ -196,7 +196,6 @@ function sendProcessNotificationEmail(request_id){
   html = HtmlService.createTemplateFromFile('needs_approval_email');
   html.request = request;
   html.url = PropertiesService.getScriptProperties().getProperty('scriptUrl');
-  template = html.evaluate().getContent();
   
   switch(request.queue){
     case "DSO":
@@ -207,10 +206,14 @@ function sendProcessNotificationEmail(request_id){
       break;
     case "CMO":
       ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%" OR roles LIKE "%DSO%" OR roles LIKE "%P%"';
+      html.url = PropertiesService.getScriptProperties().getProperty('cmoScriptUrl');
+      break;
     default:
       ccQuery = 'SELECT username FROM users WHERE roles LIKE "%BM%"';
       break;
   }
+  
+  template = html.evaluate().getContent();
   
   copyList = NVGAS.getSqlRecords(dbString, ccQuery).map(function(e){
     return e.username;
