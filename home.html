@@ -26,7 +26,7 @@
             <h1 class="text-nvBlue">AMS IV Supply Requests</h1>
           </div>
           <div class="row vertical-center" id="homeBtns" style="display:none">
-            <a class="btn btn-lg btn-primary" type="button" id="subReqBtn">Submit Supply Request</a>
+            <a class="btn btn-lg btn-primary" type="button" id="subReqBtn" disabled="disabled">Submit Supply Request</a>
             <button class="btn btn-lg btn-primary btn-validated" type="button" id="procReqBtn" disabled="disabled">
               Process Supply Requests <!-- <span class="badge">4</span> -->
             </button>
@@ -81,7 +81,7 @@ $(function(){
     google.script.run.withSuccessHandler(verifyUser).validateUser();
     $('#usrValid').hide();
     $('#homeBtns').show();
-    $('#reqBtn').prop('disabled', false);
+//    $('#reqBtn').prop('disabled', false);
   }
   
   function loadHomeActions(){
